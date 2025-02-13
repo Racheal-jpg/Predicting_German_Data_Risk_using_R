@@ -3,24 +3,24 @@ library(dplyr)
 library(ggplot2)
 
 
-#reading the data as is;through a .data file format;no column name was given ,refer to the data description.
+#reading the data as is;through a data file format;no column name was given ,refer to the data description.
 credit_data<-read_delim('./german_data/german.data',delim = " ",col_names = FALSE)
 
 #column name
 colnames <-c("status","duration","credit_history","purpose","credit_amount","savings_account","employment","insatllment_rate","personal_status","guarantors","residence_since","property","age","installment_plans","housing","num_credits","job","dependents","telephone","foreign_worker","assesment")
 
-#Attaching columns names  to dataframe
+#Attaching columns names  to data_frame
 colnames(credit_data)<-col_names
 
-chars_col <- sapply(credit_data,is.character) # find all the charactar columns
+chars_col <- sapply(credit_data,is.character) # find all the character columns
 credit_data[, chars_col]<- lapply(credit_data[, chars_col], as.factor)
 
-# Preprocessing
-# As it stands for moving to the next step (Exploratory Data Analysis) we need to recode the dataset to get more understanding as to what give a bad credit and good credit
-# Create a copy of the dataset for recoding
+# Pre_processing
+# As it stands for moving to the next step (Exploratory Data Analysis) we need to recode the data_set to get more understanding as to what give a bad credit and good credit
+# Create a copy of the data_set for re_coding
 credit_data_recode <- credit_data %>%
   mutate(
-    # Recode for "status" (Attribute 1)
+    # Re_code for "status" (Attribute 1)
     status = case_when(
       status == "A11" ~ "negative_balance",
       status == "A12" ~ "small_balance",
